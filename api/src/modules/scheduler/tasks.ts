@@ -30,23 +30,19 @@ export function registerSchedulerTasks(): void {
     .unlessBetween("12:00", "12:59")
     .timezone("Asia/Jakarta");
 
-  // update sektor TradingView tiap 30 menit di jam bursa
+  // update sektor TradingView tiap hari jam 09:00
   Schedule.call(async () => {
     await syncTradingviewStockSectors();
   }, "tradingview-stock-sector")
-    .everyThirtyMinutes()
+    .dailyAt("09:00")
     .weekdays()
-    .between("09:00", "16:59")
-    .unlessBetween("12:00", "12:59")
     .timezone("Asia/Jakarta");
 
-  // update industri TradingView tiap 30 menit di jam bursa
+  // update industri TradingView tiap hari jam 09:00
   Schedule.call(async () => {
     await syncTradingviewStockIndustries();
   }, "tradingview-stock-industry")
-    .everyThirtyMinutes()
+    .dailyAt("09:00")
     .weekdays()
-    .between("09:00", "16:59")
-    .unlessBetween("12:00", "12:59")
     .timezone("Asia/Jakarta");
 }
