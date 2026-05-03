@@ -1,6 +1,17 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../../modules/context/AuthContext";
+import { apiRequest } from "../../modules/common/api";
+
+type StockItem = {
+  ticker: string;
+  name: string;
+  closePrice: number;
+  changePrice: number;
+  percentage: number;
+  tradeValue: number;
+  isUp: boolean;
+};
 
 // mini candlestick chart dekoratif di background
 const CandlestickBg = () => {
@@ -66,6 +77,17 @@ const features = [
   },
 ];
 
+const fallbackStocks: StockItem[] = [
+  { ticker: "BBCA", name: "", closePrice: 0, changePrice: 0, percentage: 1.2, tradeValue: 0, isUp: true },
+  { ticker: "TLKM", name: "", closePrice: 0, changePrice: 0, percentage: -0.8, tradeValue: 0, isUp: false },
+  { ticker: "ASII", name: "", closePrice: 0, changePrice: 0, percentage: 0.4, tradeValue: 0, isUp: true },
+  { ticker: "GOTO", name: "", closePrice: 0, changePrice: 0, percentage: 2.1, tradeValue: 0, isUp: true },
+  { ticker: "BBRI", name: "", closePrice: 0, changePrice: 0, percentage: 0, tradeValue: 0, isUp: true },
+  { ticker: "KCFA", name: "", closePrice: 0, changePrice: 0, percentage: 0, tradeValue: 0, isUp: true },
+  { ticker: "BMRI", name: "", closePrice: 0, changePrice: 0, percentage: 0, tradeValue: 0, isUp: true },
+  { ticker: "BUMI", name: "", closePrice: 0, changePrice: 0, percentage: 0, tradeValue: 0, isUp: true },
+];
+
 const oauthErrorMessages: Record<string, string> = {
   login_gagal: "Login Google gagal. Cek GOOGLE_REDIRECT_URI di API dan Google Console.",
   missing_code: "Google tidak mengembalikan kode otorisasi.",
@@ -77,6 +99,15 @@ export default function LoginPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [stocks, setStocks] = useState<StockItem[]>([]);
+
+  useEffect(() => {
+    apiRequest<StockItem[]>("/api/public/stocks/top-trade-value")
+      .then((data) => setStocks(data.slice(0, 8)))
+      .catch(() => { /* silent fail - gunakan fallback */ });
+  }, []);
+
+  const tickerList = stocks.length > 0 ? stocks : fallbackStocks;
 
   useEffect(() => {
     const code = searchParams.get("oauth_error");
@@ -204,29 +235,41 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* ticker bottom */}
+        {/* running ticker bottom */}
         <div
           style={{
             position: "relative",
-            display: "flex",
-            gap: 24,
+            overflow: "hidden",
             fontSize: 12,
             color: "#334155",
             paddingTop: 24,
             borderTop: "1px solid rgba(148, 163, 184, 0.06)",
           }}
         >
-          {[
-            { ticker: "BBCA", val: "+1.2%", up: true },
-            { ticker: "TLKM", val: "-0.8%", up: false },
-            { ticker: "ASII", val: "+0.4%", up: true },
-            { ticker: "GOTO", val: "+2.1%", up: true },
-          ].map((t) => (
-            <div key={t.ticker} style={{ display: "flex", gap: 4, alignItems: "center" }}>
-              <span style={{ color: "#475569" }}>{t.ticker}</span>
-              <span style={{ color: t.up ? "#10b981" : "#ef4444", fontWeight: 600 }}>{t.val}</span>
-            </div>
-          ))}
+          <div
+            style={{
+              display: "flex",
+              gap: 24,
+              width: "max-content",
+              animation: "tickerScroll 30s linear infinite",
+            }}
+          >
+            {[...tickerList, ...tickerList].map((s, i) => (
+              <div key={`${s.ticker}-${i}`} style={{ display: "flex", gap: 4, alignItems: "center", whiteSpace: "nowrap" }}>
+                <span style={{ color: "#475569" }}>{s.ticker}</span>
+                <span style={{ color: s.isUp ? "#10b981" : "#ef4444", fontWeight: 600 }}>
+                  {s.percentage >= 0 ? "+" : ""}{s.percentage.toFixed(1)}%
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <style>{`
+            @keyframes tickerScroll {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+            }
+          `}</style>
         </div>
       </div>
 

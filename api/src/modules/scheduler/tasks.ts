@@ -10,15 +10,14 @@ export function registerSchedulerTasks(): void {
   void (async () => {
     // await syncTradingviewStockSectors();
     // await syncTradingviewStockIndustries();
-    await updateNews();
+    // await updateNews();
   })();
 
-  // update berita setiap hari
+  // update berita 2x sehari: jam 18:00 dan 23:00
   Schedule.call(async () => {
     await updateNews();
   }, "update-news")
-    .daily()
-    .at("08:00")
+    .twiceDailyAt(18, 23, 0)
     .timezone("Asia/Jakarta");
 
   // Senin-Jumat, jam 09:00-16:59, kecuali 12:00-13:00
