@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "stockbit-screener": {
+      "command": "node",
+      "args": ["d:/Project/personal/stockpick_agent/mcp/src/index.js"],
+      "env": {
+        "STOCKBIT_TOKEN": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImExNWQ5OGE2LTdkYzgtNDM3NS05NDk0LTEyOWJlM2RlODVkNCIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZSI6InJpemt5YXIiLCJlbWEiOiJyaXpraWF1bGlhcmFobWFuOTdAZ21haWwuY29tIiwiZnVsIjoiUml6a3kgQVIiLCJzZXMiOiI5TDJFc2FFd0VvVXFUa2tzIiwiZHZjIjoiM2FhZmUxNDRkOWNmODA1OTBkOTBlNjRmYWE0MDgyNDUiLCJ1aWQiOjExNTYzMCwiY291IjoiSUQifSwiZXhwIjoxNzc1NDMwNDIzLCJpYXQiOjE3NzUzNDQwMjMsImlzcyI6IlNUT0NLQklUIiwianRpIjoiZjEwYTJkZDktZWUzMy00OTRmLWJkMzMtNDYwMGRkNjU2Yzg2IiwibmJmIjoxNzc1MzQ0MDIzLCJ2ZXIiOiJ2MSJ9.SFs2CROv4-JpdTPeWNDAP9d_5ExL4K8vdFZshnCJ3MbVbqO5kuueJUXf31N4XKzyT2DUI1uNl5_fgt-aGgPWIg-EY02pKqATmTUzz3BpfQ5FiZDTWvYLyP61NF5D_VmiQhvEAznB8htj2p_JFf7tStPeuXjFEUzw2E2cuFyI-LB4TQGAwDiicwu1o_Z3kpR6oVVGaTvf0AHHZA64bt0xvYt_cC2JPML6uDfo_RvIQbETb8DSM5RS7MFtIHAYsLvUseWqiwbrYe6sMF7knMDS9fUUgG2jqiCK4brS0P1SZP6tROJ9CmlBVz4hhZv1dV-aViEVdp-btJVFikXa001s-A"
+      }
+    }
+  }
+}

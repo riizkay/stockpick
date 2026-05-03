@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@helper/*": ["src/modules/helper/*"],
+      "@services/*": ["src/api/services/*"],
+      "@lib/*": ["src/api/lib/*"],
+      "@middlewares": ["src/middlewares/index.ts"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@models": ["src/modules/models/index.ts"],
+      "@models/*": ["src/modules/models/*"],
+      "@database": ["src/modules/database.ts"]
+    },
+    "types": ["bun"],
+    "skipLibCheck": true
+  },
+  "include": ["index.ts", "src/**/*.ts", "src/**/*.tsx"]
+}

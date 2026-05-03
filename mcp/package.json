@@ -1,0 +1,17 @@
+{
+  "name": "stockpick_agent",
+  "version": "1.0.0",
+  "description": "MCP server untuk Stockbit screener API",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.3.6"
+  }
+}
